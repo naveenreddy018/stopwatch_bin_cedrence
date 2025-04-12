@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './clock.css';
 
 const RoutineTimer = () => {
-  const [seconds, setSeconds] = useState(0);
+ let totalseconds = 50
+  const [seconds, setSeconds] = useState(totalseconds);
 
   useEffect(() => {
     if (seconds >= 0) {
       const interval = setInterval(() => {
-        setSeconds(prev => prev + 1);
+        setSeconds(prev => prev - 1);
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -18,8 +19,9 @@ const RoutineTimer = () => {
     const secs = String(sec % 60).padStart(2, '0');
     return `${mins} : ${secs}`;
   };
-
-  const progress = (seconds / 60) * 100;
+  const radius = 45;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (seconds / totalseconds) * circumference;
 
   return (
     <div className="timer-container">
@@ -30,19 +32,19 @@ const RoutineTimer = () => {
         <svg viewBox="0 0 100 100">
           <circle className="circle-bg" cx="50" cy="50" r="45" />
           <circle
-            className="circle-progress"
+            className={`circle-progress ${seconds <= 10} ? "warning : ""`}
             cx="50"
             cy="50"
             r="45"
             strokeDasharray="282.6"
-            strokeDashoffset={282.6 - (282.6 * progress) / 100}
+            strokeDashoffset={circumference - progress}
           />
         </svg>
         <div className="time">{formatTime(seconds)}</div>
       </div>
 
       <div className="btn-group">
-        <button onClick={() => setSeconds(prev => prev + 10)}>+ 10 sec</button>
+        <button onClick={() => setSeconds(prev => prev - 10)}>-10 sec</button>
         <button onClick={() => setSeconds(0)}>Skip</button>
       </div>
 
