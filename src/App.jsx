@@ -1,10 +1,10 @@
 import React from 'react'
-import StopWatch from './components/Clock'
+import PaymentOptions from './components/payment'
 
 function App() {
   return (
     <div>
-      <StopWatch />
+      <PaymentOptions />
     </div>
   )
 }

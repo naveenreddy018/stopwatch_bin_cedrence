@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './clock.css';
 
 const RoutineTimer = () => {
- let totalseconds = 50
+ let totalseconds = 60
   const [seconds, setSeconds] = useState(totalseconds);
 
   useEffect(() => {
@@ -23,21 +23,24 @@ const RoutineTimer = () => {
   const circumference = 2 * Math.PI * radius;
   const progress = (seconds / totalseconds) * circumference;
 
+  const circleStyle = (seconds <= 30) ? "empty" : "addcolor"
+
   return (
     <div className="timer-container">
       <h3>Routine starting in...</h3>
       <p className="subheading">Subheading here</p>
 
       <div className="circle-container">
-        <svg viewBox="0 0 100 100">
+        <svg className='svg1' viewBox="0 0 100 100">
           <circle className="circle-bg" cx="50" cy="50" r="45" />
           <circle
-            className={`circle-progress ${seconds <= 10} ? "warning : ""`}
+            className={`circle-progress ${seconds <= 30 ? "empty svg2": "addcolor"} ? "empty": "addcolor"`}
             cx="50"
             cy="50"
             r="45"
+            stroke={circleStyle}
             strokeDasharray="282.6"
-            strokeDashoffset={circumference - progress}
+            strokeDashoffset={circumference + progress}
           />
         </svg>
         <div className="time">{formatTime(seconds)}</div>
